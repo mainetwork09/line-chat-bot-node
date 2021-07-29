@@ -4,7 +4,10 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const axios = require('axios')
 const app = express()
+require('dotenv').config()
+
 const port = process.env.APP_PORT || 4000
+const host = '0.0.0.0';
 
 const secret = process.env.CHANNEL_SECRET
 const token = process.env.CHANNEL_ACCESS_TOKEN
@@ -21,7 +24,9 @@ app.post('/webhook', (req, res) => {
     reply(reply_token, msg)
     res.sendStatus(200)
 })
-app.listen(port)
+app.listen(port, () => {
+    console.log(`Example app listening at http://${host}:${port}`);
+});
 
 function reply(reply_token, msg) {
 	const reply_url = `https://api.line.me/v2/bot/message/reply`;
