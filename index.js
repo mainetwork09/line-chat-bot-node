@@ -9,7 +9,12 @@ require('dotenv').config()
 const port = process.env.PORT || 8080
 const host = '0.0.0.0'
 const secret = process.env.CHANNEL_SECRET
-const token = process.env.CHANNEL_ACCESS_TOKEN
+
+// default request header
+const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${process.env.CHANNEL_ACCESS_TOKEN}`
+}
 
 // Body parser
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -17,9 +22,13 @@ app.use(bodyParser.json())
 
 // Start Routing section
 app.get('/', (req, res) =>{
-	res.send(`Hello`)
+    let msg = `Hello<br>` + 
+            `Token = ${process.env.CHANNEL_ACCESS_TOKEN}<br>` +
+            `Port = ${process.env.PORT}`
+	res.send(msg)
 })
 
+// recieve request from Line
 app.post('/webhook', (req, res) => {
     //console.log(req.body);
     let reqBody = req.body;
@@ -43,11 +52,6 @@ app.listen(port, () => {
 
 function reply(reply_token, msg) {
 	const reply_url = `https://api.line.me/v2/bot/message/reply`;
-    
-    let headers = {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-    }
     
     // Prepare package content
     let body = JSON.stringify({
