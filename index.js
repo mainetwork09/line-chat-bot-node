@@ -22,9 +22,7 @@ app.use(bodyParser.json())
 
 // Start Routing section
 app.get('/', (req, res) =>{
-    let msg = `Hello<br>` + 
-            `Token = ${process.env.CHANNEL_ACCESS_TOKEN}<br>` +
-            `Port = ${process.env.PORT}`
+    let msg = `Hello`
 	res.send(msg)
 })
 
@@ -32,6 +30,11 @@ app.get('/', (req, res) =>{
 app.post('/webhook', (req, res) => {
     //console.log(req.body);
     let reqBody = req.body;
+
+    let msg = `\n`+
+    `Token = ${process.env.CHANNEL_ACCESS_TOKEN}\n` +
+    `Port = ${process.env.PORT}\n`
+    console.log(msg)
 
     if(reqBody.events[0] !== undefined ) {
         let reply_token = reqBody.events[0].replyToken
