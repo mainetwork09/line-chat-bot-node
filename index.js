@@ -21,6 +21,7 @@ app.get('/', (req, res) =>{
 })
 
 app.post('/webhook', (req, res) => {
+    console.log(req.body);
     let reply_token = req.body.events[0].replyToken
     let msg = req.body.events[0].message.text
     reply(reply_token, msg)
