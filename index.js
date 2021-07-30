@@ -6,7 +6,7 @@ const axios = require('axios')
 const app = express()
 require('dotenv').config()
 
-const port = process.env.APP_PORT || 4000
+const port = process.env.PORT || 8080
 const host = '0.0.0.0';
 
 const secret = process.env.CHANNEL_SECRET
