@@ -21,7 +21,7 @@ const app = express();
 
 // default page
 app.get('/', (req, res) =>{
-    res.send({status:"OK"});
+    res.send({ status: "OK" });
 });
 
 // register a webhook handler with middleware
@@ -45,10 +45,13 @@ function handleEvent(event) {
     }
     
     // create a echoing text message
-    const echo = { type: 'text', text: event.message.text };
+    const message = {
+        type: 'text',
+        text: event.message.text
+    };
 
     // use reply API
-    return client.replyMessage(event.replyToken, echo);
+    return client.replyMessage(event.replyToken, message);
 }
 
 app.listen(port, () => {
