@@ -21,11 +21,18 @@ app.get('/', (req, res) =>{
 })
 
 app.post('/webhook', (req, res) => {
-    console.log(req.body);
-    let reply_token = req.body.events[0].replyToken
-    let msg = req.body.events[0].message.text
-    reply(reply_token, msg)
-    res.sendStatus(200)
+    //console.log(req.body);
+    let reqBody = req.body;
+
+    if(reqBody.events[0] !== undefined ) {
+        let reply_token = reqBody.events[0].replyToken
+        let msg = reqBody.events[0].message.text
+        reply(reply_token, msg)
+        res.sendStatus(200)
+    }else{
+        console.log(`Webhook verify.`)
+        res.sendStatus(200)
+    }
 })
 // End Routing section
 
